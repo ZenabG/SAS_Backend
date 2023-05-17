@@ -1,13 +1,32 @@
-# Spring Boot application example SAS
+# Test Execution
+You can run the tests directly by going to each class or just run `mvn clean test` from command line. This latter command requires maven installed and added to path variables. 
 
-This is an application that manages a database of a bowling league or season, with the users of the service and tournaments.
-bowling league or season, with the users of the service and the available tournaments (items).
-available (items). The users make subscriptions (orders) to the * service to register for the championships.
-service to register for tournaments.
+## Unit Tests
+Business logic i.e. ServiceClass can be tested using Mockito. Mockito will mock the RepositoryClass using @Mock and inject in ServiceClass using @InjectMocks
 
-You will find in a comment on the kingPin test file a bean of code you can use to populate the database. Feel free to use it if  you need it.
+### Test Folder Structure
+- test/java/sas/sdet/techtest/service/ServiceClassTest - Consists of unit test for ServiceClass method 'orderListByUser()'
 
-Good luck!
+## Slice Tests
+In Spring Boot, a slice test is a type of integration test that focuses on testing a specific slice or layer of your application rather than the entire application. It allows you to test a specific feature or functionality in isolation, typically by loading only the relevant components and dependencies related to that feature.
+It avoids the overhead of loading the entire application context and dependencies. 
 
 
-![cat pic](https://i.pinimg.com/736x/fe/bb/d4/febbd478ad268919fbf80b0b5e069165.jpg)
+### What will be tested 
+ControllerClass using @WebMvcTest. 
+
+### Test Folder Structure
+- test/java/sas/sdet/techtest/controller/ControllerClassTest - Consists of slice test for ControllerClass method 'getUserDexterity()'
+
+# Repository Tests
+Repository class using @DataJpaTest.
+
+## Test Folder Structure
+- test/java/sas/sdet/techtest/repository/RepositoryClassTest - Consists of repository test for RepositoryClass method 'loadUser()'
+
+# Integration Tests
+Whole system's integration testing using actual system under test. This is done using @SpringBootTest
+
+## Test Folder Structure
+- test/java/sas/sdet/techtest/integration/ - Consists of 2 integration test classes, one with controller and one for write and delete in DB
+

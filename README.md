@@ -18,15 +18,15 @@ ControllerClass using @WebMvcTest.
 ### Test Folder Structure
 - test/java/sas/sdet/techtest/controller/ControllerClassTest - Consists of slice test for ControllerClass method 'getUserDexterity()'
 
-# Repository Tests
+## Repository Tests
 Repository class using @DataJpaTest.
 
-## Test Folder Structure
+### Test Folder Structure
 - test/java/sas/sdet/techtest/repository/RepositoryClassTest - Consists of repository test for RepositoryClass method 'loadUser()'
 
-# Integration Tests
+## Integration Tests
 Whole system's integration testing using actual system under test. This is done using @SpringBootTest
 
-## Test Folder Structure
+### Test Folder Structure
 - test/java/sas/sdet/techtest/integration/ - Consists of 2 integration test classes, one with controller and one for write and delete in DB
 

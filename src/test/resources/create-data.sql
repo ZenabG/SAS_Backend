@@ -1,0 +1,6 @@
+insert into t_users (user_name, user_prop) values ('Munson', 15)
+insert into t_users (user_name, user_prop) values ('McCracken', 100)
+insert into t_items (item_name, item_prop, item_type) values ('Murfreesboro Strike and Spare', 20, 'Torneo')
+insert into t_items (item_name, item_prop, item_type) values ('Bowlerama Lanes Iowa', 7, 'Torneo')
+insert into t_ordenes (ord_id, ord_user, ord_item) values (3,'Munson','Bowlerama Lanes Iowa')
+insert into t_ordenes (ord_id, ord_user, ord_item) values (2,'Munson','Murfreesboro Strike and Spare')

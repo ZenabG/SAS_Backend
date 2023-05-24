@@ -1,5 +1,30 @@
 # Test Execution
-You can run the tests directly by going to each class or just run `mvn clean test` from command line. This latter command requires maven installed and added to path variables. 
+You can run the tests directly by going to each class or just run `mvn clean test -Dtest=!sas.sdet.techtest.integration.ControllersIntegrationTest
+` from command line for running all tests except ControllersIntegrationTest as it fails to load actual application context when running with other tests
+
+Error: 
+```
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: 
+Error creating bean with name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration': Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of URL [file:/Users/gorachz/Downloads/SAS/SAS_Backend/target/classes/schema.sql]: drop table t_users if exists; nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Cannot drop "T_USERS" because "FKSNXDWBWUFEQFWFJTY7E81AB28" depends on it; SQL statement:
+drop table t_users if exists [90107-200]
+Caused by: org.springframework.beans.factory.BeanCreationException: 
+Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of URL [file:/Users/gorachz/Downloads/SAS/SAS_Backend/target/classes/schema.sql]: drop table t_users if exists; nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Cannot drop "T_USERS" because "FKSNXDWBWUFEQFWFJTY7E81AB28" depends on it; SQL statement:
+drop table t_users if exists [90107-200]
+Caused by: org.springframework.beans.factory.BeanCreationException: 
+Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of URL [file:/Users/gorachz/Downloads/SAS/SAS_Backend/target/classes/schema.sql]: drop table t_users if exists; nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Cannot drop "T_USERS" because "FKSNXDWBWUFEQFWFJTY7E81AB28" depends on it; SQL statement:
+drop table t_users if exists [90107-200]
+Caused by: org.springframework.jdbc.datasource.init.ScriptStatementFailedException: 
+Failed to execute SQL script statement #1 of URL [file:/Users/gorachz/Downloads/SAS/SAS_Backend/target/classes/schema.sql]: drop table t_users if exists; nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Cannot drop "T_USERS" because "FKSNXDWBWUFEQFWFJTY7E81AB28" depends on it; SQL statement:
+drop table t_users if exists [90107-200]
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: 
+Cannot drop "T_USERS" because "FKSNXDWBWUFEQFWFJTY7E81AB28" depends on it; SQL statement:
+drop table t_users if exists [90107-200]
+```
+
+Run ControllersIntegrationTest separately using `mvn clean test -Dtest=sas.sdet.techtest.integration.ControllersIntegrationTest`
+
+**Pre-requisites** - maven installed and added to path variables. 
 
 ## Unit Tests
 Business logic i.e. ServiceClass can be tested using Mockito. Mockito will mock the RepositoryClass using @Mock and inject in ServiceClass using @InjectMocks
@@ -30,4 +55,5 @@ Whole system's integration testing using actual system under test. This is done 
 
 # Improvement
 
-While writing slice test for ControllerClass I noticed that `getUserDexterity()` method was not handling the case where user object is null. Added the improvement in `ControllerClass`. 
+- While writing slice test for ControllerClass I noticed that `getUserDexterity()` method was not handling the case where user object is null. Added the improvement in `ControllerClass`.
+- After adding above improvement, I noticed that `shouldLoadUser()` test from **ControllersIntegrationTest** started failing as user was never getting created. I dug deep and found that **RepositoryClass** was missing `createUser()` method. Made the necessary improvements in **RepositoryClass** and **ControllersIntegration** test. 

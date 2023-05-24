@@ -35,7 +35,7 @@ public class ControllerClassTest {
         BDDMockito.given(repositoryClass.loadUser(user1.getName())).willReturn(user1);
 
         //Performing get api call using uri endpoint provided in controller method getUserDexterity()
-        mockMvc.perform(get("/user/{name}", user1.getName())).andExpect(content().json("{\"name\":\"Jack\",\"dexterity\":10}"));
+        mockMvc.perform(get("/user/{name}", user1.getName())).andExpect(status().isOk()).andExpect(content().json("{\"name\":\"Jack\",\"dexterity\":10}"));
     }
 
     @Test

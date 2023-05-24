@@ -19,6 +19,17 @@ public class RepositoryClass {
 	@PersistenceContext
 	private EntityManager em;
 
+
+	@Transactional
+	public void createUser(User user) {
+		em.persist(user);
+	}
+
+	@Transactional
+	public void createTournament(Tournament tournament) {
+		em.persist(tournament);
+	}
+
 	@Transactional
 	public User loadUser(String name) {
 		User user = em.find(User.class, name);

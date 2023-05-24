@@ -13,16 +13,13 @@ It avoids the overhead of loading the entire application context and dependencie
 
 
 ### What will be tested 
-ControllerClass using @WebMvcTest. 
+ControllerClass using @WebMvcTest.
 
-### Test Folder Structure
-- test/java/sas/sdet/techtest/controller/ControllerClassTest - Consists of slice test for ControllerClass method 'getUserDexterity()'
-
-## Repository Tests
 Repository class using @DataJpaTest.
 
 ### Test Folder Structure
-- test/java/sas/sdet/techtest/repository/RepositoryClassTest - Consists of repository test for RepositoryClass method 'loadUser()'
+- test/java/sas/sdet/techtest/controller/ControllerClassTest - Consists of 2 slice tests for ControllerClass method 'getUserDexterity()'
+- test/java/sas/sdet/techtest/repository/RepositoryClassTest - Consists of slice test for RepositoryClass method 'loadUser()'
 
 ## Integration Tests
 Whole system's integration testing using actual system under test. This is done using @SpringBootTest
@@ -30,3 +27,7 @@ Whole system's integration testing using actual system under test. This is done 
 ### Test Folder Structure
 - test/java/sas/sdet/techtest/integration/ - Consists of 2 integration test classes, one with controller and one for write and delete in DB
 
+
+# Improvement
+
+While writing slice test for ControllerClass I noticed that `getUserDexterity()` method was not handling the case where user object is null. Added the improvement in `ControllerClass`. 

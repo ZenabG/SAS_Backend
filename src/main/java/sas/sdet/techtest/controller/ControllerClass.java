@@ -1,6 +1,7 @@
 package sas.sdet.techtest.controller;
 
 
+import org.springframework.http.ResponseEntity;
 import sas.sdet.techtest.domain.Order;
 import sas.sdet.techtest.domain.User;
 import sas.sdet.techtest.repository.RepositoryClass;
@@ -17,12 +18,35 @@ public class ControllerClass {
 	
 	@Autowired
 	RepositoryClass repositoryClass;
-    
-	@RequestMapping(path="/user/{name}")
+
+	/**
+	 * Old Implementation
+	 * @param name
+	 * @return
+	 */
+//	@RequestMapping(path="/user/{name}")
+//	@ResponseBody
+//	public User getUserDexterity(@PathVariable String name){
+//		return repositoryClass.loadUser(name);
+//	}
+
+	/**
+	 * New Improved implementation
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping(path = "/user/{name}")
 	@ResponseBody
-	public User getUserDexterity(@PathVariable String name){
-		return repositoryClass.loadUser(name);
-	}	
+	public ResponseEntity<User> getUserDexterity(@PathVariable String name) {
+		User user = repositoryClass.loadUser(name);
+
+		if (user == null) {
+			return ResponseEntity.notFound().build(); // Return 404 response for non-existent user
+		}
+
+		return ResponseEntity.ok(user);
+	}
+
 	
 	@RequestMapping(path="/order", method=RequestMethod.POST)
 	@ResponseBody

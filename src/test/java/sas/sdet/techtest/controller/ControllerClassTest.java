@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import sas.sdet.techtest.domain.User;
 import sas.sdet.techtest.repository.RepositoryClass;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = ControllerClass.class)
@@ -34,6 +35,19 @@ public class ControllerClassTest {
         BDDMockito.given(repositoryClass.loadUser(user1.getName())).willReturn(user1);
 
         //Performing get api call using uri endpoint provided in controller method getUserDexterity()
-        mockMvc.perform(get("/user/{name}", user1.getName())).andExpect(status().isOk());
+        mockMvc.perform(get("/user/{name}", user1.getName())).andExpect(content().json("{\"name\":\"Jack\",\"dexterity\":10}"));
+    }
+
+    @Test
+    void shouldReturnNotFoundForNonExistentUser() throws Exception {
+        //Not a user, just a string
+        String nonExistentUserName = "NonExistentUser";
+
+        //Mocking the behavior using BDDMockito to give expected result
+        BDDMockito.given(repositoryClass.loadUser(nonExistentUserName)).willReturn(null);
+
+        //Performing get api call using uri endpoint provided in controller method getUserDexterity()
+        mockMvc.perform(get("/user/{name}", nonExistentUserName))
+                .andExpect(status().isNotFound());
     }
 }

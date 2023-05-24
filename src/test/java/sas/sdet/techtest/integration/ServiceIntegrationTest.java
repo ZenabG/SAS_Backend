@@ -13,13 +13,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import sas.sdet.techtest.repository.RepositoryClass;
 import sas.sdet.techtest.domain.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.jdbc.Sql;
+import sas.sdet.techtest.service.ServiceClass;
 
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 
@@ -29,7 +29,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TES
 public class ServiceIntegrationTest {
 
     @Autowired
-    private RepositoryClass repositoryClass;
+    private ServiceClass serviceClass;
 
     /**
      * Sql scripts create-data.sql and cleanup-data.sql is for inserting data into DB and deleting it.
@@ -38,7 +38,7 @@ public class ServiceIntegrationTest {
      */
     @Test
     void getOrdersListByName() {
-        List<Order> ordersList = repositoryClass.orderListByUser("Munson");
+        List<Order> ordersList = serviceClass.orderListByUser("Munson");
         assertThat(ordersList).hasSize(2);
         assertThat(ordersList.get(0).getId()).isEqualTo(2);
     }
